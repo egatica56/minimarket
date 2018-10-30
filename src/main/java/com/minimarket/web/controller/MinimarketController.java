@@ -54,26 +54,35 @@ public class MinimarketController {
 	}
 
 	@PostMapping("/almacenar")
-	public String almacenar(Model model, RedirectAttributes ra, @RequestParam("txtNombre") String nombre,
-			@RequestParam("txtPeso") float peso,
-			@RequestParam("txtFechaIngreso") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIngreso,
-			@RequestParam("cboRaza") int razaId) {
+	public String almacenar(Model model, RedirectAttributes ra, 
+			@RequestParam("txtSKU") int sku,
+			@RequestParam("txtNombre") String nombre,
+			@RequestParam("txtPrecio") int precio,
+			@RequestParam("cboMarca") int marcaId,
+			@RequestParam("cboCategoria") int categoriaId,
+			@RequestParam("txtDescripcion") String descripcion
+			) {
 
-		Marca raza = new Marca();
-		raza.setIdMarca(razaId);
+		Categoria categoria = new Categoria();
+		categoria.setIdCategoria(categoriaId);
+		
+		Marca marca = new Marca();
+		marca.setIdMarca(marcaId);
 
 		Producto producto = new Producto();
-		// animal.setNombre(nombre);
-		// animal.setPeso(peso);
-		// animal.setFechaIngreso(fechaIngreso);
-		// animal.setRaza(raza);
+		producto.setCategoria(categoria);
+		producto.setMarca(marca);
+		producto.setSku(sku);
+		producto.setNombreProduto(nombre);
+		producto.setPrecioProducto(precio);
+		producto.setDescripcionProduto(descripcion);
 
 		// guardamos el animal y comprobamos que se haya
 		// insertado correctamente
 		Producto produtoAgregado = pDAO.crud().save(producto);
-		String mensaje = "Error al agregar";
+		String mensaje = "Error al agregar el producto";
 		if (produtoAgregado != null) {
-			mensaje = "Guardado correctamente";
+			mensaje = "Producto Guardado correctamente";
 		}
 
 		ra.addFlashAttribute("mensaje", mensaje);
