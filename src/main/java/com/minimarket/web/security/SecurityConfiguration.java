@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// deshabilitamos el csrf
 		http.csrf().disable();
 		http.authorizeRequests()
-		.antMatchers("/minimarket/**")
+		.antMatchers("/**")
 		.authenticated()
 		.antMatchers("/")
 		.permitAll()

@@ -4,35 +4,43 @@
 
 {% block contenido %}
 
+<div class="container-fluid" align="center">
+<h1>Modificar Productos</h1>
+</div>
 
-<h1>Modificar Animal</h1>
-
-
-<form action="actualizar" method="post">
-	<input type="hidden" name="txtId" id="txtId" value="{{ a.getId() }}"/>
-	<table>
-		<tr>
+<div class="container-fluid" align="center">
+<form action="actualizar" method="post" class="form">
+	<input type="hidden" name="txtSKU" id="txtSKU" value="{{ p.getSku()}}"/>
+	<table class="table" align="center">
+		<tr class="form-group">
 			<td><label for="">Nombre</label></td>
-			<td><input type="text" name="txtNombre" id="txtNombre" value="{{ a.getNombre() }}" /></td>
-		</tr>
-		<tr>
-			<td><label for="">Fecha ingreso</label></td>
-			<td><input type="date" name="txtFechaIngreso"
-				id="txtFechaIngreso" value="{{ a.getFechaIngreso() }}" /></td>
-
+			<td><input type="text" name="txtNombre" id="txtNombre" value="{{ p.getNombreProduto() }}" /></td>
 		</tr>
 		
 		<tr>
+			<td><label for="">Precio</label></td>
+			<td><input type="number" name="txtPrecio"
+				id="txtPrecio" value="{{ p.getPrecioProducto() }}" /></td>
+		</tr>
+		
+		<tr>
+			<td><label for="">Stock</label></td>
+			<td><input type="number" name="txtStock" id="txtStock" value="{{ p.getStockProducto() }}" /></td>
+
+		</tr>
+		
+		
+		<tr>
 			<td>
-				<label for="">Familia</label>
+				<label for="">Categoria</label>
 			</td>
 			<td>
-				<select name="cboFamilia" id="cboFamilia">
+				<select name="cboCategoria" id="cboCategoria">
 					<option value="">Seleccionar</option>
 					
-					{% for f in familias %}
+					{% for c in categorias %}
 					
-					<option  {{ (f.getId() == a.getRaza().getFamilia().getId())?'selected':''}} value="{{ f.getId() }}">{{ f.getNombre() }}</option>
+					<option  {{ (c.getIdCategoria() == p.getCategoria().getIdCategoria())?'selected':''}} value="{{ c.getIdCategoria() }}">{{ c.getNombreCategoria() }}</option>
 					
 					{% endfor %}
 					
@@ -42,14 +50,14 @@
 		
 		<tr>
 			<td>
-				<label for="">Raza</label>
+				<label for="">Marca</label>
 			</td>
 			<td>
-				<select name="cboRaza" id="cboRaza">
+				<select name="cboMarca" id="cboMarca">
 					<option value="">seleccionar</option>
 					
-					{% for r in razas %}
-					<option {{ (r.getId() == a.getRaza().getId())?'selected':'' }} value="{{ r.getId() }}">{{ r.getNombre() }}</option>
+					{% for m in marcas %}
+					<option {{ (m.getIdMarca() == p.getMarca().getIdMarca())?'selected':'' }} value="{{ m.getIdMarca() }}">{{ m.getNombreMarca() }}</option>
 					{% endfor %}
 					
 				</select>
@@ -57,23 +65,22 @@
 		</tr>
 		<tr>
 			<td>
-				<label for="">Peso</label>
+				<label for="">Descripcion</label>
 			</td>
 			<td>
-				<input type="number" name="txtPeso" id="txtPeso" value="{{ a.getPeso() }}" />
+				<input type="text" name="txtDescripcion" id="txtDescripcion" value="{{ p.getDescripcionProduto() }}" />
 			</td>
 		</tr>
 		
 		<tr>
 			<td></td>
 			<td>
-				<input type="submit" value="Modificar" />
+				<input class="btn btn-primary" type="submit" value="Modificar" />
 			</td>
 		</tr>
 	</table>
-
- 
 </form>
+</div>
 {{ mensaje }}
 
 

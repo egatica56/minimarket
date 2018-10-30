@@ -23,7 +23,7 @@ import com.minimarket.web.entity.Producto;
 import com.minimarket.web.entity.Categoria;;
 
 @Controller
-@RequestMapping("/minimarket")
+//@RequestMapping("/minimarket")
 public class MinimarketController {
 
 	@Autowired
@@ -141,25 +141,35 @@ public class MinimarketController {
 	@PostMapping("/actualizar")
 	public String actualizar(Model model,
 			RedirectAttributes ra,
-			@RequestParam("txtId") int id,
+			@RequestParam("txtSKU") int sku,
 			@RequestParam("txtNombre") String nombre,
-			@RequestParam("txtPeso") float peso,
+			@RequestParam("txtPrecio") int precio,
+			@RequestParam("txtStock") int stock,
+			@RequestParam("cboMarca") int marcaId,
 			@RequestParam("cboCategoria") int categoriaId,
-			@RequestParam("cboMarca") int marcaId)
+			@RequestParam("txtDescripcion") String descripcion
+			)
 	{
 			
 		Categoria categoria = new Categoria();
 		categoria.setIdCategoria(categoriaId);
-		Marca marca=new Marca();
+		
+		Marca marca = new Marca();
 		marca.setIdMarca(marcaId);
+
+		Producto producto = new Producto();
+		producto.setCategoria(categoria);
+		producto.setMarca(marca);
+		producto.setSku(sku);
+		producto.setStockProducto(stock);
+		producto.setNombreProduto(nombre);
+		producto.setPrecioProducto(precio);
+		producto.setDescripcionProduto(descripcion);
 		
-		Producto produto = new Producto();
-		//producto.setSku(id);
 		
-		produto.setMarca(marca);
 		//guardamos el animal y comprobamos que se haya
 		//insertado correctamente
-		Producto productoAgregado = pDAO.crud().save(produto);
+		Producto productoAgregado = pDAO.crud().save(producto);
 		String mensaje = "Error al modificar";
 		if(productoAgregado!= null) {
 			mensaje = "Modificado correctamente";
