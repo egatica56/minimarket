@@ -49,7 +49,7 @@ public class Producto implements java.io.Serializable {
 		this.sku = sku;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria", nullable = false)
 	public Categoria getCategoria() {
 		return this.categoria;
@@ -59,7 +59,7 @@ public class Producto implements java.io.Serializable {
 		this.categoria = categoria;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "marca", nullable = false)
 	public Marca getMarca() {
 		return this.marca;

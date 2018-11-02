@@ -1,6 +1,7 @@
 package com.minimarket.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -431,6 +432,50 @@ public class MinimarketController {
 		ra.addFlashAttribute("mensaje", mensaje);
 		
 		return "redirect:listarMarca";
+	}
+	
+	
+
+	@GetMapping("/listarProductoCategoria")
+	public String listarCategorias(Model model) {
+		
+		model.addAttribute("categorias", cDAO.crud().findAll());
+		return "listar_productoCategoria.html";
+	}
+
+	
+	
+
+	@PostMapping("/listarProductoCategoria")
+	public String listarProductoCategoria(Model model,
+			RedirectAttributes ra,		
+			@RequestParam("cboCategoria") int categoriaId) {
+		model.addAttribute("categorias", cDAO.crud().findAll());
+		model.addAttribute("productos", pDAO.listarProductoCategoria(categoriaId));
+
+		return "listar_productoCategoria.html";
+	}
+
+
+	
+	@GetMapping("/listarProductoPrecio")
+	public String listarProductoPrecio(Model model) {
+				
+		return "listar_productoPrecio.html";
+	}
+
+	
+	
+
+	@PostMapping("/listarProductoPrecio")
+	public String listarProductoPrecio(Model model,
+			RedirectAttributes ra,		
+			@RequestParam("txtMinimo") int minimo,
+			@RequestParam("txtMaximo") int maximo) {
+		model.addAttribute("categorias", cDAO.crud().findAll());
+		model.addAttribute("productos", pDAO.listarProductoPrecio(minimo, maximo));
+
+		return "listar_productoPrecio.html";
 	}
 	
 	
