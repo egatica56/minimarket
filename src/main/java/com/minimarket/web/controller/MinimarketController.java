@@ -181,6 +181,257 @@ public class MinimarketController {
 	}
 	
 	
+	//categorias
+	@GetMapping("/crearCategoria")
+	public String crearCategoria(Model model) {
+
+		return "agregarCategoria.html";
+	}
+
+	
+	
+	@GetMapping("/listarCategoria")
+	public String listarCategoria(Model model) {
+
+		model.addAttribute("categorias", cDAO.crud().findAll());
+
+		return "listar_categorias.html";
+	}
+	
+
+	
+	
+
+	
+	@PostMapping("/almacenarCategoria")
+	public String almacenarCategoria(Model model, RedirectAttributes ra, 
+			@RequestParam("txtNombreCat") String nombreCat,
+			@RequestParam("txtDescCategoria") String descripcionCat
+			
+			) {
+
+		Categoria categoria = new Categoria();
+		categoria.setNombreCategoria(nombreCat);
+		categoria.setDescripcionCategoria(descripcionCat);
+		
+		
+		// guardamos el animal y comprobamos que se haya
+		// insertado correctamente
+		Categoria categoriaAgregado = cDAO.crud().save(categoria);
+		String mensaje = "Error al agregar el producto";
+		if (categoriaAgregado != null) {
+			mensaje = "Categoria creada correctamente";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:crearCategoria";
+	}
+	
+	
+	
+	@GetMapping("/eliminarCategoria")
+	public String eliminarCategoria(Model model, RedirectAttributes ra, @RequestParam("id") int id) {
+
+		String mensaje = "";
+
+		try {
+			// eliminamos al animal
+			cDAO.crud().deleteById(id);
+			mensaje = "Categoria Eliminada correctamente";
+		} catch (Exception ex) {
+			mensaje = "No se ha podido eliminar la categoria";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:listarCategoria";
+	}
+
+	
+	
+
+	@GetMapping("/modificarCategoria")
+	public String modificarCategoria(Model model,
+			RedirectAttributes ra,
+			@RequestParam("id") int id) {
+		
+		//buscamos al animal
+		Categoria c = null;
+		
+		try {
+			
+			c = cDAO.crud().findById(id).get();
+			
+		} catch (Exception e) {
+			
+			//si el animal no existe en la BBDD
+			//lo redirigimos de vuelta con un mensaje de error
+			ra.addFlashAttribute("mensaje", "Error la categoria no existe");
+			return "redirect:listarCategoria";
+		}
+		
+		//si encuentra el animal lo enviamos a la vista
+		model.addAttribute("c", c);
+		
+		
+		
+		return "modificarCategorias.html";
+	}
+
+	@PostMapping("/actualizarCategoria")
+	public String actualizarCategoria(Model model,
+			RedirectAttributes ra,
+			@RequestParam("txtIdCategoria") int idCategoria,
+			@RequestParam("txtNombreCat") String nombreCategoria,
+			@RequestParam("txtDescripcionCat") String descripcionCategoria
+			)
+	{
+			
+		Categoria categoria = new Categoria();
+		categoria.setIdCategoria(idCategoria);
+		categoria.setDescripcionCategoria(descripcionCategoria);
+		categoria.setNombreCategoria(nombreCategoria);
+				
+		
+		//guardamos el animal y comprobamos que se haya
+		//insertado correctamente
+		Categoria categoriaAgregada = cDAO.crud().save(categoria);
+		String mensaje = "Error al modificar Categoria";
+		if(categoriaAgregada!= null) {
+			mensaje = "Categoria Modificada correctamente";
+		}
+		
+		ra.addFlashAttribute("mensaje", mensaje);
+		
+		return "redirect:listarCategoria";
+	}
+	
+//////////////////////////MARCAS//////////////////////////////////////////////////////////
+	@GetMapping("/crearMarca")
+	public String crearMarca(Model model) {
+
+		return "agregarMarca.html";
+	}
+
+	
+	
+	@GetMapping("/listarMarca")
+	public String listarMarca(Model model) {
+
+		model.addAttribute("marcas", mDAO.crud().findAll());
+
+		return "listar_marcas.html";
+	}
+	
+
+	
+	
+
+	
+	@PostMapping("/almacenarMarca")
+	public String almacenarMarca(Model model, RedirectAttributes ra, 
+			@RequestParam("txtNombreMar") String nombreMar,
+			@RequestParam("txtDescMarca") String descripcionMar
+			
+			) {
+
+		Marca marca = new Marca();
+		marca.setNombreMarca(nombreMar);
+		marca.setDescripcionMarca(descripcionMar);
+		
+		
+		// guardamos el animal y comprobamos que se haya
+		// insertado correctamente
+		Marca marcaAgregado = mDAO.crud().save(marca);
+		String mensaje = "Error al agregar la Marca";
+		if (marcaAgregado != null) {
+			mensaje = "Marca creada correctamente";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:crearMarca";
+	}
+	
+	
+	
+	@GetMapping("/eliminarMarca")
+	public String eliminarMarca(Model model, RedirectAttributes ra, @RequestParam("id") int id) {
+
+		String mensaje = "";
+
+		try {
+			// eliminamos al animal
+			mDAO.crud().deleteById(id);
+			mensaje = "Marca Eliminada correctamente";
+		} catch (Exception ex) {
+			mensaje = "No se ha podido eliminar la Marca";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:listarMarca";
+	}
+
+	
+	
+
+	@GetMapping("/modificarMarca")
+	public String modificarMarca(Model model,
+			RedirectAttributes ra,
+			@RequestParam("id") int id) {
+		
+		//buscamos al animal
+		Marca m = null;
+		
+		try {
+			
+			m= mDAO.crud().findById(id).get();
+			
+		} catch (Exception e) {
+			
+			//si el animal no existe en la BBDD
+			//lo redirigimos de vuelta con un mensaje de error
+			ra.addFlashAttribute("mensaje", "Error la Marca no existe");
+			return "redirect:listarMarca";
+		}
+		
+		//si encuentra el animal lo enviamos a la vista
+		model.addAttribute("m", m);
+		
+		
+		
+		return "modificarMarcas.html";
+	}
+
+	@PostMapping("/actualizarMarca")
+	public String actualizarMarca(Model model,
+			RedirectAttributes ra,
+			@RequestParam("txtIdMarca") int idMarca,
+			@RequestParam("txtNombreMar") String nombreMarca,
+			@RequestParam("txtDescripcionMar") String descripcionMarca
+			)
+	{
+			
+		Marca marca=new Marca();
+		marca.setIdMarca(idMarca);
+		marca.setNombreMarca(nombreMarca);
+		marca.setDescripcionMarca(descripcionMarca);
+				
+		
+		//guardamos el animal y comprobamos que se haya
+		//insertado correctamente
+		Marca marcaAgregada = mDAO.crud().save(marca);
+		String mensaje = "Error al modificar Marca";
+		if(marcaAgregada!= null) {
+			mensaje = "Marca Modificada correctamente";
+		}
+		
+		ra.addFlashAttribute("mensaje", mensaje);
+		
+		return "redirect:listarMarca";
+	}
 	
 	
 	
