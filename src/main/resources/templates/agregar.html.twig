@@ -5,35 +5,34 @@
 {% block contenido %}
 
 
+<div class="container" align="center">
 <h1>Agregar Producto</h1>
+<form action="almacenar" method="post" class="form" align="center">
 
-
-<form action="almacenar" method="post">
-
-	<table>
+	<table class="table">
 		<tr>
 			<td>SKU</td>
-			<td><input type="number" name="txtSKU" id="txtSKU" /></td>
+			<td><input type="number" name="txtSKU" id="txtSKU" min=0 required="" class="form-control"/></td>
 		</tr>
 		<tr>
 			<td><label for="">Nombre</label></td>
-			<td><input type="text" name="txtNombre" id="txtNombre" /></td>
+			<td><input type="text" name="txtNombre" id="txtNombre" required="" class="form-control"/></td>
 		</tr>
 		<tr>
 			<td><label for="">Precio</label></td>
-			<td><input type="number" name="txtPrecio" id="txtPrecio" /></td>
+			<td><input type="number" name="txtPrecio" id="txtPrecio" min=0 required="" class="form-control"/></td>
 
 		</tr>
 		<tr>
 			<td><label for="">Stock</label></td>
-			<td><input type="number" name="txtStock" id="txtStock" /></td>
+			<td><input type="number" name="txtStock" id="txtStock" min=0 required="" class="form-control"/></td>
 
 		</tr>
 				
 
 		<tr>
 			<td><label for="">Categoria</label></td>
-			<td><select name="cboCategoria" id="cboCategoria">
+			<td><select class="form-control" name="cboCategoria" id="cboCategoria">
 					<option value="">Seleccionar</option>
 
 					{% for c in categorias %}
@@ -47,7 +46,7 @@
 
 		<tr>
 			<td><label for="">Marca</label></td>
-			<td><select name="cboMarca" id="cboMarca">
+			<td><select class="form-control" name="cboMarca" id="cboMarca">
 					<option value="">seleccionar</option>
 
 					{% for m in marcas %}
@@ -58,7 +57,7 @@
 		</tr>
 		<tr>
 			<td><label for="">Descripcion</label></td>
-			<td><input type="text" name="txtDescripcion" id="txtDescripcion" />
+			<td><input type="text" name="txtDescripcion" id="txtDescripcion" required="" class="form-control"/>
 			</td>
 		</tr>
 
@@ -70,7 +69,9 @@
 
 
 </form>
-{{ mensaje }}
+<h1 align="center">{{ mensaje }}</h1>
+</div>
+
 
 {% endblock contenido %}
 

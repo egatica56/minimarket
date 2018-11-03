@@ -16,11 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.minimarket.web.DAO.IProductoDAO;
 import com.minimarket.web.DAO.MarcaDAO;
 import com.minimarket.web.DAO.ProductoDAO;
+import com.minimarket.web.DAO.UsuarioDAO;
 import com.minimarket.web.DAO.CategoriaDAO;
 import com.minimarket.web.DAO.ICategoriaDAO;
 import com.minimarket.web.DAO.IMarcaDAO;
 import com.minimarket.web.entity.Marca;
 import com.minimarket.web.entity.Producto;
+import com.minimarket.web.entity.Usuario;
 import com.minimarket.web.entity.Categoria;;
 
 @Controller
@@ -36,6 +38,8 @@ public class MinimarketController {
 	@Autowired
 	private CategoriaDAO cDAO;
 
+	@Autowired
+	private UsuarioDAO uDAO;
 	
 	@GetMapping("/listar")
 	public String listar(Model model) {
@@ -477,6 +481,155 @@ public class MinimarketController {
 
 		return "listar_productoPrecio.html";
 	}
+	
+	
+/////////////////////////////////////////////////////////USUARIO//////////
+	
+	@GetMapping("/crearUsuario")
+	public String crearUsuario(Model model) {
+
+		return "agregarUsuario.html";
+	}
+
+	
+	
+	@GetMapping("/listarUsuario")
+	public String listarUsuario(Model model) {
+
+		model.addAttribute("usuarios", uDAO.crud().findAll());
+
+		return "listar_usuarios.html";
+	}
+	
+
+	
+	
+
+	
+	@PostMapping("/almacenarUsuario")
+	public String almacenarUsuario(Model model, RedirectAttributes ra, 
+			@RequestParam("txtUsername") String username,
+			@RequestParam("txtPassword") String pass,
+			@RequestParam("txtEmail") String email,
+			@RequestParam("txtNombre") String nombres,
+			@RequestParam("txtApellido") String apellidos,
+			@RequestParam("txtDireccion") String direccion
+			
+			) {
+
+		Usuario u =new Usuario();
+		u.setUsername(username);
+		u.setPassword(pass);
+		u.setEmail(email);
+		u.setNombres(nombres);
+		u.setApellidos(apellidos);
+		u.setDireccion(direccion);
+		
+		
+		// guardamos el animal y comprobamos que se haya
+		// insertado correctamente
+		Usuario usuarioAgregado = uDAO.crud().save(u);
+		String mensaje = "Error al agregar el usuario";
+		if (usuarioAgregado != null) {
+			mensaje = "Usuario agregado correctamente";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:crearUsuario";
+	}
+	
+	
+	
+	@GetMapping("/eliminarUsuario")
+	public String eliminarUsuario(Model model, RedirectAttributes ra, @RequestParam("id") int id) {
+
+		String mensaje = "";
+
+		try {
+			// eliminamos al animal
+			uDAO.crud().deleteById(id);
+			mensaje = "Usuario Eliminado correctamente";
+		} catch (Exception ex) {
+			mensaje = "No se ha podido eliminar el Usuario";
+		}
+
+		ra.addFlashAttribute("mensaje", mensaje);
+
+		return "redirect:listarUsuario";
+	}
+
+	
+	
+
+	@GetMapping("/modificarUsuario")
+	public String modificarUsuario(Model model,
+			RedirectAttributes ra,
+			@RequestParam("id") int id) {
+		
+		//buscamos al animal
+		Usuario u = null;
+		
+		try {
+			
+			u= uDAO.crud().findById(id).get();
+			
+		} catch (Exception e) {
+			
+			//si el animal no existe en la BBDD
+			//lo redirigimos de vuelta con un mensaje de error
+			ra.addFlashAttribute("mensaje", "Error la Marca no existe");
+			return "redirect:listarUsuario";
+		}
+		
+		//si encuentra el animal lo enviamos a la vista
+		model.addAttribute("u", u);
+		
+		
+		
+		return "modificarUsuario.html";
+	}
+
+	@PostMapping("/actualizarUsuario")
+	public String actualizarUsuario(Model model,
+			RedirectAttributes ra,
+			@RequestParam("txtIdUsuario") int idUsuario,
+			@RequestParam("txtUsername") String username,
+			@RequestParam("txtPassword") String pass,
+			@RequestParam("txtEmail") String email,
+			@RequestParam("txtNombre") String nombres,
+			@RequestParam("txtApellido") String apellidos,
+			@RequestParam("txtDireccion") String direccion
+			)
+	{
+			
+		Usuario u =new Usuario();
+		u.setIdUsuario(idUsuario);
+		u.setUsername(username);
+		u.setPassword(pass);
+		u.setEmail(email);
+		u.setNombres(nombres);
+		u.setApellidos(apellidos);
+		u.setDireccion(direccion);
+				
+		
+		//guardamos el animal y comprobamos que se haya
+		//insertado correctamente
+		Usuario usuarioAgregado = uDAO.crud().save(u);
+		String mensaje = "Error al modificar el usuario";
+		if(usuarioAgregado!= null) {
+			mensaje = "Usuario Modificado correctamente";
+		}
+		
+		ra.addFlashAttribute("mensaje", mensaje);
+		
+		return "redirect:listarUsuario";
+	}
+
+	
+	
+	
+	
 	
 	
 	

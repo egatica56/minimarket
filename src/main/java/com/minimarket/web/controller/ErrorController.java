@@ -1,16 +1,20 @@
 package com.minimarket.web.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
+@RequestMapping("/error")
 public class ErrorController {
-	
-	@GetMapping("/403")
-	public String forbiden() {
-		
-		
-		return "403.html";
+
+
+
+	@GetMapping("/error")
+	public String badRequest() {
+
+		return "400.html";
 	}
 
 }

@@ -6,15 +6,15 @@ Listado Productos
 {% endblock titulo %}
 
 {% block contenido %}
-
+<div class="container" align="center">
 <h1>Listado de Productos Por Categoria</h1>
-
+</div>
 <form action="listarProductoCategoria" method="post" class="form" align="center">
 	<div class="container-fluid">
 		<table class="table" align="center">
 			<tr>
 				<td><label for="">Categoria</label></td>
-				<td><select name="cboCategoria" id="cboCategoria">
+				<td><select class="form-control" name="cboCategoria" id="cboCategoria">
 						<option value="">Seleccionar</option>
 
 						{% for c in categorias %}

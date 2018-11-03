@@ -14,18 +14,18 @@
 	<table class="table" align="center">
 		<tr class="form-group">
 			<td><label for="">Nombre</label></td>
-			<td><input type="text" name="txtNombre" id="txtNombre" value="{{ p.getNombreProduto() }}" /></td>
+			<td><input type="text" name="txtNombre" id="txtNombre" value="{{ p.getNombreProduto() }}" required="" class="form-control"/></td>
 		</tr>
 		
 		<tr>
 			<td><label for="">Precio</label></td>
 			<td><input type="number" name="txtPrecio"
-				id="txtPrecio" value="{{ p.getPrecioProducto() }}" /></td>
+				id="txtPrecio" value="{{ p.getPrecioProducto() }}" class="form-control" /></td>
 		</tr>
 		
 		<tr>
 			<td><label for="">Stock</label></td>
-			<td><input type="number" name="txtStock" id="txtStock" value="{{ p.getStockProducto() }}" /></td>
+			<td><input type="number" name="txtStock" id="txtStock" value="{{ p.getStockProducto() }}" required="" class="form-control"/></td>
 
 		</tr>
 		
@@ -35,7 +35,7 @@
 				<label for="">Categoria</label>
 			</td>
 			<td>
-				<select name="cboCategoria" id="cboCategoria">
+				<select class="form-control" name="cboCategoria" id="cboCategoria">
 					<option value="">Seleccionar</option>
 					
 					{% for c in categorias %}
@@ -53,7 +53,7 @@
 				<label for="">Marca</label>
 			</td>
 			<td>
-				<select name="cboMarca" id="cboMarca">
+				<select class="form-control" name="cboMarca" id="cboMarca">
 					<option value="">seleccionar</option>
 					
 					{% for m in marcas %}
@@ -68,7 +68,7 @@
 				<label for="">Descripcion</label>
 			</td>
 			<td>
-				<input type="text" name="txtDescripcion" id="txtDescripcion" value="{{ p.getDescripcionProduto() }}" />
+				<input type="text" name="txtDescripcion" id="txtDescripcion" value="{{ p.getDescripcionProduto() }}" required="" class="form-control"/>
 			</td>
 		</tr>
 		
@@ -81,7 +81,7 @@
 	</table>
 </form>
 </div>
-{{ mensaje }}
+<div align="center" class="container">{{ mensaje }}</div>
 
 
 {% endblock contenido %}
